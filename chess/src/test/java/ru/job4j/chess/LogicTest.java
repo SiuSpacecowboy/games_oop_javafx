@@ -77,6 +77,4 @@ public class LogicTest {
         boolean exp = true;
         Assert.assertEquals(exp, res);
     }
-
-
 }
