@@ -6,6 +6,9 @@ import ru.job4j.chess.firuges.black.BishopBlack;
 
 import java.util.Arrays;
 
+import static ru.job4j.chess.firuges.Cell.D7;
+import static ru.job4j.chess.firuges.Cell.E6;
+
 public final class Logic {
     private final Figure[] figures = new Figure[32];
     private int index = 0;
@@ -23,8 +26,23 @@ public final class Logic {
     }
 
     private boolean free(Cell[] steps) throws OccupiedCellException {
-        return true;
-    }
+        boolean res = true;
+        for (Cell step : steps) {
+            if (!res) {
+                break;
+            }
+            for (Figure figure : figures) {
+                if (step == figure.position()) {
+                    res = false;
+                    break;
+                }
+            }
+        }
+            if (!res) {
+                throw new OccupiedCellException("Another figure on the way");
+            }
+            return res;
+        }
 
     public void clean() {
         Arrays.fill(figures, null);
@@ -40,19 +58,5 @@ public final class Logic {
         }
         throw new FigureNotFoundException();
     }
-    
-    public Cell collectFigure(int index) {
-        System.out.println(figures[index].position());
-        return figures[index].position();
-    }
-
-    public static void main(String[] args) {
-        Logic logic = new Logic();
-        Figure figure = new BishopBlack(Cell.C1);
-        Figure figure1 = new BishopBlack(Cell.C2);
-        logic.add(figure);
-        logic.add(figure1);
-        logic.collectFigure(0);
-        logic.collectFigure(1);
-    }
 }
+

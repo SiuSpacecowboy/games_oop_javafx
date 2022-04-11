@@ -19,11 +19,14 @@ public class BishopBlack implements Figure {
     }
 
     @Override
-    public Cell[] way(Cell dest, Logic logic) {
-        //Figure bish =  new BishopBlack(Cell.C1); // Я без понятия как я должен узнать начальное положение фигуры, чтобы выполнить это задания, я должен создавать объект, хотя в рамках программы это в корне неверно.
-        Cell pos = logic.collectFigure(0);
-        int x = pos.getX();
-        int y = pos.getY();
+    public Cell[] way(Cell dest) {
+        if (!isDiagonal(position, dest)) {
+            throw new ImpossibleMoveException(
+                    String.format("Could not way by diagonal from %s to %s", position, dest)
+            );
+        }
+        int x = position.getX();
+        int y = position.getY();
         int x1 = dest.getX();
         int y1 = dest.getY();
         int deltaX = x1 - x > 0 ? 1 : -1;
@@ -36,24 +39,22 @@ public class BishopBlack implements Figure {
             arr[index] = Cell.findBy(x, y);
         }
         return arr;
-       /* throw new ImpossibleMoveException(
-                String.format("Could not way by diagonal from %s to %s", position, dest)
-        );
-*/
     }
 
     public boolean isDiagonal(Cell source, Cell dest) {
-        return false;
+        boolean res = false;
+        int sx = source.getX();
+        int sy = source.getY();
+        int ex = dest.getX();
+        int ey = dest.getY();
+        if (Math.abs(ex - sx) == Math.abs(ey - sy)) {
+            res = true;
+        }
+        return res;
     }
 
     @Override
     public Figure copy(Cell dest) {
         return new BishopBlack(dest);
-    }
-
-    public static void main(String[] args) {
-        Logic logic = new Logic();
-        Figure bish = new BishopBlack(Cell.C1);
-        Cell[] array = bish.way(Cell.G5);
     }
 }
