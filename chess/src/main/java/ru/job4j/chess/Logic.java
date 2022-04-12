@@ -26,23 +26,15 @@ public final class Logic {
     }
 
     private boolean free(Cell[] steps) throws OccupiedCellException {
-        boolean res = true;
         for (Cell step : steps) {
-            if (!res) {
-                break;
-            }
             for (Figure figure : figures) {
-                if (step == figure.position()) {
-                    res = false;
-                    break;
+                if (figure != null && figure.position().equals(step)) {
+                    throw new OccupiedCellException("Another figure on the way");
                 }
             }
         }
-            if (!res) {
-                throw new OccupiedCellException("Another figure on the way");
-            }
-            return res;
-        }
+        return true;
+    }
 
     public void clean() {
         Arrays.fill(figures, null);

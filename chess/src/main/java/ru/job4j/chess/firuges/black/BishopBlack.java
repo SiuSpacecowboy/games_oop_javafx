@@ -42,14 +42,7 @@ public class BishopBlack implements Figure {
     }
 
     public boolean isDiagonal(Cell source, Cell dest) {
-        boolean res = false;
-        int sx = source.getX();
-        int sy = source.getY();
-        int ex = dest.getX();
-        int ey = dest.getY();
-        if (Math.abs(ex - sx) == Math.abs(ey - sy)) {
-            res = true;
-        }
+        boolean res = Math.abs(dest.getX() - source.getX()) == Math.abs(dest.getY() - source.getY());
         return res;
     }
 
