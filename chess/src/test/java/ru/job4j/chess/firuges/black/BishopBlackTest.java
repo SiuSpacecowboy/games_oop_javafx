@@ -51,3 +51,4 @@ public class BishopBlackTest {
         Assert.assertEquals(exp, res);
     }
 }
+
